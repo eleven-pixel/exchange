@@ -64,7 +64,7 @@ program exchange.aleo {
     finalize sell(order: Order) {
         let commission_addr: address = aleo1wzgkaj0tdezlunuh52sc5e65c9n2w7r57sn8h7ph76vrr3mv8grslk9n57;
         let rate: u64 = 3u64; 
-        let current_key:u64 = Mapping::get_or_init(keys, 1u64, 0u64);
+        let current_key:u64 = Mapping::get_or_use(keys, 1u64, 0u64);
         let count:u64 = 0u64;
         for i:u64 in 1u64..1024u64 {
             if (count < order.qty && i <= current_key) {
@@ -191,7 +191,7 @@ program exchange.aleo {
     finalize buy(order: Order) {
         let commission_addr: address = aleo1wzgkaj0tdezlunuh52sc5e65c9n2w7r57sn8h7ph76vrr3mv8grslk9n57;
         let rate: u64 = 3u64;
-        let current_key:u64 = Mapping::get_or_init(keys, 1u64, 0u64);
+        let current_key:u64 = Mapping::get_or_use(keys, 1u64, 0u64);
         let count:u64 = 0u64;
         let amount:u64 = 0u64;
         for i:u64 in 1u64..1024u64 {
@@ -305,7 +305,7 @@ program exchange.aleo {
     } 
     finalize cancel(addr: address,id: u64) {
         let rate: u64 = 3u64;
-        let current_key:u64 = Mapping::get_or_init(keys,  1u64, 0u64);
+        let current_key:u64 = Mapping::get_or_use(keys,  1u64, 0u64);
         for i:u64 in 1u64..1024u64 {
             if (i <= current_key) {
                 let order :Order = Mapping::get(orders,  i);
@@ -352,7 +352,7 @@ program exchange.aleo {
         } then finalize(addr, amount,token);
     }
     finalize recharge(addr: address, amount: u64,token: u64) {
-        let account: Account = Mapping::get_or_init(accounts, addr, Account{
+        let account: Account = Mapping::get_or_use(accounts, addr, Account{
             Aleo:Token{
                 amount:0u64,
                 lock:0u64,
@@ -391,7 +391,7 @@ program exchange.aleo {
         } then finalize(addr, amount,token);
     }
     finalize withdraw(addr: address, amount: u64,token: u64) {
-        let account: Account = Mapping::get_or_init(accounts, addr, Account{
+        let account: Account = Mapping::get_or_use(accounts, addr, Account{
             Aleo:Token{
                 amount:0u64,
                 lock:0u64,
